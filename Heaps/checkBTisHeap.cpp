@@ -1,0 +1,80 @@
+#include<bits/stdc++.h>
+#include <ext/pb_ds/assoc_container.hpp>
+using namespace __gnu_pbds;
+using namespace std;
+ 
+#define ff              first
+#define ss              second
+#define int             long long
+#define pb              push_back
+#define mp              make_pair
+#define pii             pair<int,int>
+#define vi              vector<int>
+#define mii             map<int,int>
+#define pqb             priority_queue<int>
+#define pqs             priority_queue<int,vi,greater<int> >
+#define setbits(x)      __builtin_popcountll(x)
+#define zrobits(x)      __builtin_ctzll(x)
+#define mod             1000000007
+#define inf             1e18
+#define ps(x,y)         fixed<<setprecision(y)<<x
+#define mk(arr,n,type)  type *arr=new type[n];
+#define w(x)            int x; cin>>x; while(x--)
+mt19937                 rng(chrono::steady_clock::now().time_since_epoch().count());
+ 
+typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
+
+int n;  // Rpresents total No of nodes in a given tree
+bool IsCBT(node* root,int idx){
+	if(root == NULL)
+		return true;
+
+	if(idx > n){ // voilates left to right filling property
+		return false;
+	}
+
+	if(IsCBT(root->left,2*idx) and IsCBT(root->right,2*idx+1))
+		return true;
+
+	return false;
+}
+bool IsHeap(node* root){
+	if(root == NULL)
+		return true;
+
+	int val   = root->data;
+	int left  = (root->left)?root->left->data : INT_MAX;
+	int right = (root->right)?root->right->data : INT_MAX;
+
+	if(val < left and val < right and IsHeap(root->left) and IsHeap(root->right)){
+		return true;
+	}
+	return false;
+}
+
+bool checkBTisHeap(node* root){
+
+	if(IsCBT(root) and IsHeap(root)){
+		return true;
+	}
+	return false;
+} 
+void c_p_c()
+{
+    ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+#ifndef ONLINE_JUDGE
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
+#endif
+}
+ 
+int32_t main()
+{
+    clock_t begin = clock();
+    c_p_c();
+	#ifndef ONLINE_JUDGE 
+	  clock_t end = clock();
+	  cout<<"\nExecuted In: "<<double(end - begin) / CLOCKS_PER_SEC*1000<<" ms";
+	#endif 
+    return 0;
+}

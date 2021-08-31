@@ -1,0 +1,10 @@
+abb
+abb
+bab
+bba
+bba
+bab
+3
+abb
+bab
+bba
