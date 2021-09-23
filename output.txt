@@ -1,3 +1,0 @@
-6
-
-Executed In: 0.083 ms
