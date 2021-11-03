@@ -1,0 +1,30 @@
+Case #1: up=1
+down=1
+to=1
+1
+
+Case #2: up=3
+down=3
+to=0
+0
+
+Case #3: up=3
+down=1
+to=3
+2
+
+Case #4: up=0
+down=3
+to=3
+1
+
+Case #5: up=2
+down=3
+to=3
+3
+
+Case #6: up=2
+down=0
+to=5
+1
+

@@ -1,2 +1,4 @@
-1 2 2 6 4 
-Executed In: 0.075 ms
+3
+2
+
+Executed In: 30.927 ms
