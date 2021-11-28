@@ -28,6 +28,12 @@ mt19937                 rng(chrono::steady_clock::now().time_since_epoch().count
 
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
+int gcd(int a, int b)
+{
+	if (a == 0)
+		return b;
+	return gcd(b % a, a);
+}
 
 void c_p_c()
 {
@@ -39,13 +45,15 @@ void c_p_c()
 	w(x) {
 		int u, v;
 		cin >> u >> v;
-		int a = u - 1;
-		int b = v - 1;
+		int a = v * v;
+		int b = u * u;
 
-		int Lcm = (a * b ) / __gcd(a, b);
+		/*int Lcm = (a * b ) / gcd(a, b);
 		int ax = 0;
 		ax -= Lcm / b;
-		int ay = Lcm / a;
+		int ay = Lcm / a;*/
+		int ax = -b;
+		int ay = a;
 		cout << ax << " " << ay << "\n";
 	}
 }

@@ -36,18 +36,51 @@ void c_p_c()
 	freopen("input.txt", "r", stdin);
 	freopen("output.txt", "w", stdout);
 #endif
-	w(x) {
-		int u, v;
-		cin >> u >> v;
-		int a = u - 1;
-		int b = v - 1;
-
-		int Lcm = (a * b ) / __gcd(a, b);
-		int ax = 0;
-		ax -= Lcm / b;
-		int ay = Lcm / a;
-		cout << ax << " " << ay << "\n";
+	string s;
+	int k;
+	cin >> s >> k;
+	int n = (int)s.size();
+	int cnt = 0;
+	rep(i, 0, s.size()) {
+		if (s[i] == '.') {
+			cnt++;
+		}
 	}
+	if (k >= cnt) {
+		cout << (int)s.size() << "\n";
+		return;
+	}
+
+	/*  vi nextdot(n+1);
+	  int prev = n;
+	  for(int i=n-1;i>=0;i--){
+	  	if(s[i] == '.'){
+	  		nextdot[i] = prev;
+	  		prev = i;
+	  	}
+	  }*/
+
+	int i = 0;
+	int j = 0;
+	int mx  = 0;
+	int ans = 0;
+	int cntdot = 0;
+	int prevDot = 0;
+	for (; j < n; j++) {
+		if (s[j] == '.') {
+			cntdot++;
+			while (cntdot > k) {
+				//deb(j);
+				if (s[i] == '.')
+					cntdot--;
+				i++;
+			}
+		}
+		ans = max(ans, j - i + 1);
+		//deb(ans);
+
+	}
+	cout << ans << "\n";
 }
 
 int32_t main()

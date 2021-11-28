@@ -39,68 +39,11 @@ void c_p_c()
 	w(x) {
 		int n, m;
 		cin >> n >> m;
-		vector<pair<int, int>> food;
-		vector<pair<int, int>> food_ranges;
-		int X = 0, Y = 0;
-		int sub = 0, ans;
-		rep(i, 0, n) {
-			int fish, meat;
-			cin >> fish >> meat;
-			food.pb({fish, meat});
-			sub += fish - meat;
-			int l = m - meat > 0 ? m - meat : 0;
-			food_ranges.pb({l, min(fish, m)});
-			X += food_ranges[i].ff;
-			Y += food_ranges[i].ss;
-		}
+		//if (m > n) swap(n, m);
+		int ans = n * m;
+		ans = ceil(ans / 3.0);
 
-		/*rep(i, 0, n) {
-				cout << food_ranges[i].ff << " " << food_ranges[i].ss << "\n";
-		}*/
-		sub += n * m;
-		/*deb(sub);
-		deb(X);
-		deb(Y);*/
-		int comp = sub / 2;
-		if (comp >= X and comp <= Y) {
-			if (sub & 1) {
-				ans = 1;
-			} else {
-				ans = 0;
-			}
-			cout << ans << "\n";
-			int sum = 0;
-			int i = 0;
-			int new_comp = comp - X;
-			while (new_comp > 0 and i < n) {
-				if (food_ranges[i].ff + new_comp <= food_ranges[i].ss) {
-					cout << food_ranges[i].ff + new_comp << " " << m - food_ranges[i].ff - new_comp << "\n";
-					i++;
-					break;
-				} else {
-					cout << food_ranges[i].ss << " " << m - food_ranges[i].ss << "\n";
-					new_comp -= food_ranges[i].ss - food_ranges[i].ff;
-					i++;
-				}
-			}
-
-			while (i < n) {
-				cout << food_ranges[i].ff << " " << m - food_ranges[i].ff << "\n";
-				i++;
-			}
-		} else if (comp < X) {
-			ans = abs(sub - 2 * X);
-			cout << ans << "\n";
-			rep(i, 0, n) {
-				cout << food_ranges[i].ff << " " << m - food_ranges[i].ff << "\n";
-			}
-		} else {
-			ans = abs(sub - 2 * Y);
-			cout << ans << "\n";
-			rep(i, 0, n) {
-				cout << food_ranges[i].ss << " " << m - food_ranges[i].ss << "\n";
-			}
-		}
+		cout << ans << "\n";
 	}
 }
 

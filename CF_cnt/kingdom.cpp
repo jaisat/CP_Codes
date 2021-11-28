@@ -28,7 +28,23 @@ mt19937                 rng(chrono::steady_clock::now().time_since_epoch().count
 
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
+vector<int> g[200005];
+int f;
+int eg;
+int no;
+void dfs(int src, int par, vi &vis) {
+	vis[src] = true;
+	no++;
+	eg += g[src].size();
+	for (auto ch : g[src]) {
 
+		if (!vis[ch]) {
+			dfs(ch, src, vis);
+		} else if (ch != par) {
+			f = 0;
+		}
+	}
+}
 void c_p_c()
 {
 	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
@@ -37,70 +53,41 @@ void c_p_c()
 	freopen("output.txt", "w", stdout);
 #endif
 	w(x) {
+		rep(i, 0, 200005) {
+			g[i].clear();
+		}
+
 		int n, m;
 		cin >> n >> m;
-		vector<pair<int, int>> food;
-		vector<pair<int, int>> food_ranges;
-		int X = 0, Y = 0;
-		int sub = 0, ans;
-		rep(i, 0, n) {
-			int fish, meat;
-			cin >> fish >> meat;
-			food.pb({fish, meat});
-			sub += fish - meat;
-			int l = m - meat > 0 ? m - meat : 0;
-			food_ranges.pb({l, min(fish, m)});
-			X += food_ranges[i].ff;
-			Y += food_ranges[i].ss;
+		rep(i, 0, m) {
+			int u, v;
+			cin >> u >> v;
+			g[u].pb(v);
+			g[v].pb(u);
 		}
 
-		/*rep(i, 0, n) {
-				cout << food_ranges[i].ff << " " << food_ranges[i].ss << "\n";
-		}*/
-		sub += n * m;
-		/*deb(sub);
-		deb(X);
-		deb(Y);*/
-		int comp = sub / 2;
-		if (comp >= X and comp <= Y) {
-			if (sub & 1) {
-				ans = 1;
-			} else {
-				ans = 0;
-			}
-			cout << ans << "\n";
-			int sum = 0;
-			int i = 0;
-			int new_comp = comp - X;
-			while (new_comp > 0 and i < n) {
-				if (food_ranges[i].ff + new_comp <= food_ranges[i].ss) {
-					cout << food_ranges[i].ff + new_comp << " " << m - food_ranges[i].ff - new_comp << "\n";
-					i++;
-					break;
-				} else {
-					cout << food_ranges[i].ss << " " << m - food_ranges[i].ss << "\n";
-					new_comp -= food_ranges[i].ss - food_ranges[i].ff;
-					i++;
+		int cnt = 0;
+		int x_r = 0;
+		vector<int> vis(n + 1, 0);
+		for (int i = 1; i <= n; i++) {
+			if (!vis[i]) {
+				f = 1;
+				eg = 0;
+				no = 0;
+				dfs(i, -1, vis);
+				cnt++;
+				/*deb(eg);
+				deb(no);*/
+				if (eg == (no) * (no - 1)) {
+					x_r++;
 				}
 			}
-
-			while (i < n) {
-				cout << food_ranges[i].ff << " " << m - food_ranges[i].ff << "\n";
-				i++;
-			}
-		} else if (comp < X) {
-			ans = abs(sub - 2 * X);
-			cout << ans << "\n";
-			rep(i, 0, n) {
-				cout << food_ranges[i].ff << " " << m - food_ranges[i].ff << "\n";
-			}
-		} else {
-			ans = abs(sub - 2 * Y);
-			cout << ans << "\n";
-			rep(i, 0, n) {
-				cout << food_ranges[i].ss << " " << m - food_ranges[i].ss << "\n";
-			}
 		}
+		if (cnt == 1) {
+			cout << 0 << "\n";
+			continue;
+		}
+		cout << x_r << '\n';
 	}
 }
 

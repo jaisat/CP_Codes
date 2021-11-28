@@ -28,6 +28,35 @@ mt19937                 rng(chrono::steady_clock::now().time_since_epoch().count
 
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
+const int N = 1e6 + 5;
+int a, b, n;
+int fact[N];
+bool isGood(int &no) {
+	while (no) {
+		int bit = no % 10;
+		if ((bit != a) and (bit != b)) {
+			return false;
+		}
+		no /= 10;
+	}
+	return true;
+}
+int pw(int a, int b, int m) {
+	int ans = 1;
+	while (b) {
+		if (b & 1) {
+			ans *= a;
+			ans %= mod;
+		}
+		a *= a;
+		a %= mod;
+	}
+	return ans;
+}
+
+int inverse(int a, int m) {
+	return pw(a, m - 2, m);
+}
 
 void c_p_c()
 {
@@ -36,18 +65,24 @@ void c_p_c()
 	freopen("input.txt", "r", stdin);
 	freopen("output.txt", "w", stdout);
 #endif
-	w(x) {
-		int u, v;
-		cin >> u >> v;
-		int a = u - 1;
-		int b = v - 1;
 
-		int Lcm = (a * b ) / __gcd(a, b);
-		int ax = 0;
-		ax -= Lcm / b;
-		int ay = Lcm / a;
-		cout << ax << " " << ay << "\n";
+	cin >> a >> b >> n;
+	int ans = 0;
+	fact[0] = 1;
+	for (int i = 1; i <= N; i++) {
+		fact[i] = i * fact[i - 1];
+		fact[i] %= mod;
 	}
+
+	for (int x = 0; x <= n; x++) {
+		int num = a * x + (n - x) * b;
+		if (isGood(num)) {
+			ans += (fact[n] * inverse(fact[x], mod)) % mod * inverse(fact[n - x], mod);
+			ans %= mod;
+
+		}
+	}
+	cout << ans << "\n";
 }
 
 int32_t main()

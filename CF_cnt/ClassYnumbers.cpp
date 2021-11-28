@@ -28,6 +28,35 @@ mt19937                 rng(chrono::steady_clock::now().time_since_epoch().count
 
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
+int dp[20][20][2];
+int classy(int pos, int no, int small, string &str) {
+	if (pos == (int)str.size()) {
+		return (no <= 3);
+	}
+
+	if (dp[pos][no][small] != -1) {
+		return dp[pos][no][small];
+	}
+
+	int curr = str[pos] - '0';
+	int ans = 0;
+	rep(i, 0, 10) {
+		if (small || i < curr) {
+			if (i == 0) {
+				ans += classy(pos + 1, no, 1, str);
+			} else {
+				ans += classy(pos + 1, no + 1, 1, str);
+			}
+		} else if (i == curr) {
+			if (i == 0) {
+				ans += classy(pos + 1, no, 0, str);
+			} else {
+				ans += classy(pos + 1, no + 1, 0, str);
+			}
+		}
+	}
+	return dp[pos][no][small] = ans;
+}
 
 void c_p_c()
 {
@@ -37,16 +66,18 @@ void c_p_c()
 	freopen("output.txt", "w", stdout);
 #endif
 	w(x) {
-		int u, v;
-		cin >> u >> v;
-		int a = u - 1;
-		int b = v - 1;
+		int L, R;
+		cin >> L >> R;
+		L--;
+		string l, r;
+		l = to_string(L);
+		r = to_string(R);
+		memset(dp, -1, sizeof dp);
+		int ansR = classy(0, 0, 0, r);
+		memset(dp, -1, sizeof dp);
+		int ansL = classy(0, 0, 0, l);
 
-		int Lcm = (a * b ) / __gcd(a, b);
-		int ax = 0;
-		ax -= Lcm / b;
-		int ay = Lcm / a;
-		cout << ax << " " << ay << "\n";
+		cout << ansR - ansL << "\n";
 	}
 }
 

@@ -28,7 +28,29 @@ mt19937                 rng(chrono::steady_clock::now().time_since_epoch().count
 
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
+int dp[200005][3];
+int n0, n1, n2, n;
 
+int noofways(int pos, int mo) {
+	if (pos == n) {
+		return mo == 0;
+	}
+
+	int &ans = dp[pos][mo];
+	if (ans != -1) {
+		return ans;
+	}
+
+	ans = 0;
+	ans = ans + n0 * noofways(pos + 1, mo);
+	ans %= mod;
+	ans = ans + n1 * noofways(pos + 1, (mo + 1) % 3);
+	ans %= mod;
+	ans = ans + n2 * noofways(pos + 1, (mo + 2) % 3);
+	ans %= mod;
+
+	return ans;
+}
 void c_p_c()
 {
 	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
@@ -36,18 +58,39 @@ void c_p_c()
 	freopen("input.txt", "r", stdin);
 	freopen("output.txt", "w", stdout);
 #endif
-	w(x) {
-		int u, v;
-		cin >> u >> v;
-		int a = u - 1;
-		int b = v - 1;
+	int l, r;
+	cin >> n >> l >> r;
 
-		int Lcm = (a * b ) / __gcd(a, b);
-		int ax = 0;
-		ax -= Lcm / b;
-		int ay = Lcm / a;
-		cout << ax << " " << ay << "\n";
+	n0 = r / 3;
+	n1 = n0;
+	n2 = n0;
+	if (r % 3 == 1) {
+		n1++;
+	} else if (r % 3 == 2) {
+		n1++;
+		n2++;
 	}
+
+	int nl1, nl2;
+	int nl0 = (l - 1) / 3;
+	nl1 = nl0;
+	nl2 = nl0;
+	if ((l - 1) % 3 == 1) {
+		nl1++;
+	} else if ((l - 1) % 3 == 2) {
+		nl1++;
+		nl2++;
+	}
+
+	n0 -= nl0;
+	n1 -= nl1;
+	n2 -= nl2;
+
+
+	memset(dp, -1, sizeof dp);
+	int ans = noofways(0, 0);
+	cout << ans << "\n";
+
 }
 
 int32_t main()

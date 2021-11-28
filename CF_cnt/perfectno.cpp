@@ -28,6 +28,14 @@ mt19937                 rng(chrono::steady_clock::now().time_since_epoch().count
 
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
+int sol(int x) {
+	int sum = 0;
+	while (x) {
+		sum += x % 10;
+		x /= 10;
+	}
+	return sum;
+}
 
 void c_p_c()
 {
@@ -36,18 +44,14 @@ void c_p_c()
 	freopen("input.txt", "r", stdin);
 	freopen("output.txt", "w", stdout);
 #endif
-	w(x) {
-		int u, v;
-		cin >> u >> v;
-		int a = u - 1;
-		int b = v - 1;
-
-		int Lcm = (a * b ) / __gcd(a, b);
-		int ax = 0;
-		ax -= Lcm / b;
-		int ay = Lcm / a;
-		cout << ax << " " << ay << "\n";
+	int k;
+	cin >> k;
+	int ans = 0;
+	while (k) {
+		ans++;
+		if (sol(ans) == 10) k--;
 	}
+	cout << ans << "\n";
 }
 
 int32_t main()

@@ -28,6 +28,37 @@ mt19937                 rng(chrono::steady_clock::now().time_since_epoch().count
 
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
+int n, d;
+string str;
+int dp[10005][2][100];
+
+int count_digits(int pos, int f, int sum) {
+	if (pos == n) {
+		return sum == 0;
+	}
+
+	if (dp[pos][f][sum] != -1) {
+		return dp[pos][f][sum];
+	}
+
+	int ans = 0;
+	int no = str[pos] - '0';
+	if (!f) {
+		rep(i, 0, no) {
+			ans += count_digits(pos + 1, 1, (sum + i) % d);
+			ans %= mod;
+		}
+
+		ans += count_digits(pos + 1, 0, (sum + no) % d);
+		ans %= mod;
+	} else {
+		rep(i, 0, 10) {
+			ans += count_digits(pos + 1, 1, (sum + i) % d);
+			ans %= mod;
+		}
+	}
+	return dp[pos][f][sum] = ans;
+}
 
 void c_p_c()
 {
@@ -36,18 +67,11 @@ void c_p_c()
 	freopen("input.txt", "r", stdin);
 	freopen("output.txt", "w", stdout);
 #endif
-	w(x) {
-		int u, v;
-		cin >> u >> v;
-		int a = u - 1;
-		int b = v - 1;
-
-		int Lcm = (a * b ) / __gcd(a, b);
-		int ax = 0;
-		ax -= Lcm / b;
-		int ay = Lcm / a;
-		cout << ax << " " << ay << "\n";
-	}
+	cin >> str;
+	cin >> d;
+	n = str.size();
+	memset(dp, -1, sizeof dp);
+	cout << (count_digits(0, 0, 0) - 1 + mod) % mod << "\n";
 }
 
 int32_t main()

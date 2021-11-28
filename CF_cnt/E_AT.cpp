@@ -29,6 +29,24 @@ mt19937                 rng(chrono::steady_clock::now().time_since_epoch().count
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 
+vector<int> g[200005];
+
+int find(int i, vi & parent) {
+	if (parent[i] == i) {
+		return i;
+	}
+	return find(parent[i], parent);
+}
+
+void Union(int a, int b, vi &parent) {
+	int p1 = find(a, parent);
+	int p2 = find(b, parent);
+
+	if (p1 != p2)
+		parent[b] = a;
+
+}
+
 void c_p_c()
 {
 	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
@@ -36,18 +54,41 @@ void c_p_c()
 	freopen("input.txt", "r", stdin);
 	freopen("output.txt", "w", stdout);
 #endif
-	w(x) {
-		int u, v;
+	int n, m;
+	cin >> n >> m;
+	rep(i, 0, m) {
+		int v, u;
 		cin >> u >> v;
-		int a = u - 1;
-		int b = v - 1;
-
-		int Lcm = (a * b ) / __gcd(a, b);
-		int ax = 0;
-		ax -= Lcm / b;
-		int ay = Lcm / a;
-		cout << ax << " " << ay << "\n";
+		g[v].pb(u);
+		g[u].pb(v);
 	}
+
+	vi parent(n + 1);
+	rep(i, 1, n + 1) {
+		parent[i] = i;
+	}
+
+	vi ans_v = {0};
+	int ans = 0;
+	for (int i = n; i > 1; i--) {
+		ans++;
+		for (auto ch : g[i]) {
+			if (ch < i ) {
+				continue;
+			}
+			if (find(i, parent) != find(ch, parent)) {
+				Union(i, ch, parent);
+				ans--;
+			}
+		}
+		ans_v.pb(ans);
+	}
+	reverse(ans_v.begin(), ans_v.end());
+	rep(i, 0, (int)ans_v.size()) {
+		cout << ans_v[i] << "\n";
+	}
+
+
 }
 
 int32_t main()

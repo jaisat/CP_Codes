@@ -17,7 +17,7 @@ using namespace std;
 #define all(x)			x.begin(), x.end()
 #define setbits(x)      __builtin_popcountll(x)
 #define zrobits(x)      __builtin_ctzll(x)
-#define mod             1000000007
+#define mod             998244353
 #define inf             1e18
 #define rep(i,a,b)      for(int i=a;i<b;i++)
 #define ps(x,y)         fixed<<setprecision(y)<<x
@@ -28,7 +28,34 @@ mt19937                 rng(chrono::steady_clock::now().time_since_epoch().count
 
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
+const int N = 2005;
+int n, m, k;
+int fact[N];
+int pw(int a, int b) {
+	if (b == 0) {
+		return 1;
+	}
+	int ans = 1;
+	while (b) {
+		if (b & 1) {
+			ans *= a;
+			ans %= mod;
+		}
+		a *= a;
+		a %= mod;
+		b = b >> 1;
+	}
+	return ans;
+}
 
+int inverse(int a, int m) {
+	return pw(a, m - 2);
+}
+
+int ncr(int n, int r) {
+	int ans = ((fact[n] * inverse(fact[r], mod)) % mod * inverse(fact[n - r], mod)) % mod;
+	return ans;
+}
 void c_p_c()
 {
 	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
@@ -36,18 +63,15 @@ void c_p_c()
 	freopen("input.txt", "r", stdin);
 	freopen("output.txt", "w", stdout);
 #endif
-	w(x) {
-		int u, v;
-		cin >> u >> v;
-		int a = u - 1;
-		int b = v - 1;
-
-		int Lcm = (a * b ) / __gcd(a, b);
-		int ax = 0;
-		ax -= Lcm / b;
-		int ay = Lcm / a;
-		cout << ax << " " << ay << "\n";
+	fact[0] = 1;
+	for (int i = 1; i < N; i++) {
+		fact[i] = i * fact[i - 1];
+		fact[i] %= mod;
 	}
+	cin >> n >> m >> k;
+	int ans =  ((ncr(n - 1, k) * m) % mod * pw(m - 1, k)) % mod;
+	cout << ans << "\n";
+
 }
 
 int32_t main()

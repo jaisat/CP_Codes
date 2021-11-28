@@ -28,6 +28,24 @@ mt19937                 rng(chrono::steady_clock::now().time_since_epoch().count
 
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
+const int N = 1e6 + 5;
+int prime[N];
+vector<int> primes;
+void seive() {
+	rep(i, 0, N) {
+		prime[i] = 1;
+	}
+	for (int i = 2; i < N; i++) {
+		if (!prime[i]) {
+			continue;
+		}
+		primes.pb(i);
+		for (int j = i * i; j < N; j += i) {
+			prime[j] = 0;
+		}
+	}
+}
+
 
 void c_p_c()
 {
@@ -36,17 +54,13 @@ void c_p_c()
 	freopen("input.txt", "r", stdin);
 	freopen("output.txt", "w", stdout);
 #endif
+	seive();
 	w(x) {
-		int u, v;
-		cin >> u >> v;
-		int a = u - 1;
-		int b = v - 1;
-
-		int Lcm = (a * b ) / __gcd(a, b);
-		int ax = 0;
-		ax -= Lcm / b;
-		int ay = Lcm / a;
-		cout << ax << " " << ay << "\n";
+		int d;
+		cin >> d;
+		int p = *upper_bound(primes.begin(), primes.end(), d);
+		int q = *upper_bound(primes.begin(), primes.end(), p + d - 1);
+		cout  << p * q << "\n";
 	}
 }
 

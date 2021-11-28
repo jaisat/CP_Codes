@@ -36,17 +36,32 @@ void c_p_c()
 	freopen("input.txt", "r", stdin);
 	freopen("output.txt", "w", stdout);
 #endif
-	w(x) {
-		int u, v;
-		cin >> u >> v;
-		int a = u - 1;
-		int b = v - 1;
+	string s1, s2;
+	cin >> s1;
+	cin >> s2;
+	int b = 0;
+	if (s1[0] == '#') {
+		b++;
+	}
+	if (s1[1] == '#') {
+		b++;
+	} if (s2[0] == '#') {
+		b++;
+	} if (s2[1] == '#') {
+		b++;
+	}
 
-		int Lcm = (a * b ) / __gcd(a, b);
-		int ax = 0;
-		ax -= Lcm / b;
-		int ay = Lcm / a;
-		cout << ax << " " << ay << "\n";
+	if (b >= 3) {
+		cout << "Yes";
+		return;
+	}
+
+	if (b == 2) {
+		if (s1[0] == s2[1]) {
+			cout << "No\n";
+		} else {
+			cout << "Yes" << "\n";
+		}
 	}
 }
 

@@ -14,7 +14,7 @@ using namespace std;
 #define deb(x)          cout << #x << "=" << x << endl
 #define pqb             priority_queue<int>
 #define pqs             priority_queue<int,vi,greater<int> >
-#define all(x)			x.begin(), x.end()
+#define all(x)            x.begin(), x.end()
 #define setbits(x)      __builtin_popcountll(x)
 #define zrobits(x)      __builtin_ctzll(x)
 #define mod             1000000007
@@ -31,32 +31,32 @@ typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_
 
 void c_p_c()
 {
-	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+    ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 #ifndef ONLINE_JUDGE
-	freopen("input.txt", "r", stdin);
-	freopen("output.txt", "w", stdout);
+    freopen("input.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
 #endif
-	w(x) {
-		int u, v;
-		cin >> u >> v;
-		int a = u - 1;
-		int b = v - 1;
-
-		int Lcm = (a * b ) / __gcd(a, b);
-		int ax = 0;
-		ax -= Lcm / b;
-		int ay = Lcm / a;
-		cout << ax << " " << ay << "\n";
-	}
+    int n;
+    string s;
+    cin >> n;
+    cin >> s;
+    cout << "nskjd";
 }
 
 int32_t main()
 {
-	clock_t begin = clock();
-	c_p_c();
+    clock_t begin = clock();
+    int t;
+    cin >> t;
+    for (int T = 1; T <= t; T++) {
+        cout << "nkfa";
+        cout << "Case #" << T << ": ";
+        c_p_c();
+    }
+
 #ifndef ONLINE_JUDGE
-	clock_t end = clock();
-	cout << "\nExecuted In: " << double(end - begin) / CLOCKS_PER_SEC * 1000 << " ms";
+    clock_t end = clock();
+    cout << "\nExecuted In: " << double(end - begin) / CLOCKS_PER_SEC * 1000 << " ms";
 #endif
-	return 0;
+    return 0;
 }

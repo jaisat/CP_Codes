@@ -36,24 +36,31 @@ void c_p_c()
 	freopen("input.txt", "r", stdin);
 	freopen("output.txt", "w", stdout);
 #endif
-	w(x) {
-		int u, v;
-		cin >> u >> v;
-		int a = u - 1;
-		int b = v - 1;
-
-		int Lcm = (a * b ) / __gcd(a, b);
-		int ax = 0;
-		ax -= Lcm / b;
-		int ay = Lcm / a;
-		cout << ax << " " << ay << "\n";
+	string s, f;
+	cin >> s >> f;
+	int ans = 0;
+	rep(i, 0, (int)s.size()) {
+		int min_;
+		rep(j, 0, (int)f.size()) {
+			int asc = abs((s[i] - '0') - (f[j] - '0'));
+			int asc1 = 26 - asc;
+			min_ = min(asc, asc1);
+		}
+		ans += min_;
 	}
+	cout << ans << "\n";
 }
 
 int32_t main()
 {
 	clock_t begin = clock();
-	c_p_c();
+	int tt;
+	cin >> tt;
+	for (int t = 1; t <= tt; t++) {
+		cout << "Case #" << t << ": ";
+		c_p_c();
+	}
+
 #ifndef ONLINE_JUDGE
 	clock_t end = clock();
 	cout << "\nExecuted In: " << double(end - begin) / CLOCKS_PER_SEC * 1000 << " ms";

@@ -28,6 +28,22 @@ mt19937                 rng(chrono::steady_clock::now().time_since_epoch().count
 
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
+int pw(int a, int b) {
+	if (b == 0) {
+		return 1;
+	}
+	int ans = 1;
+	while (b) {
+		if (b & 1) {
+			ans *= a;
+			ans %= mod;
+		}
+		a *= a;
+		a %= mod;
+		b = b >> 1;
+	}
+	return ans;
+}
 
 void c_p_c()
 {
@@ -36,18 +52,51 @@ void c_p_c()
 	freopen("input.txt", "r", stdin);
 	freopen("output.txt", "w", stdout);
 #endif
-	w(x) {
-		int u, v;
-		cin >> u >> v;
-		int a = u - 1;
-		int b = v - 1;
+	int n;
+	cin >> n;
+	int zc = 0;
+	map<pair<int, int>, int > mp;
+	rep(i, 0, n) {
+		int x, y;
+		cin >> x >> y;
+		if (x == 0 and y == 0) {
+			zc++;
+			continue;
+		}
 
-		int Lcm = (a * b ) / __gcd(a, b);
-		int ax = 0;
-		ax -= Lcm / b;
-		int ay = Lcm / a;
-		cout << ax << " " << ay << "\n";
+		if (y < 0) {
+			y *= -1;
+			x *= -1;
+		}
+
+		if (y == 0) {
+			x = abs(x);
+		}
+
+		int g = __gcd(abs(x), abs(y));
+		x /= g;
+		y /= g;
+		mp[ {x, y}]++;
 	}
+	int ans = 1;
+	for (auto it : mp) {
+		int theta = it.second;
+		int xt = it.first.first;
+		int yt = it.first.second;
+		int xtt = -yt;
+		int ytt = xt;
+
+		if (ytt < 0) {
+			xtt *= -1;
+			ytt *= -1;
+		}
+
+		int thetaper = mp[ {xtt, ytt}];
+		ans *= (pw(2, theta - 1) + pw(2, thetaper - 1) - 1 + mod) % mod;
+		ans %= mod;
+	}
+	ans = (ans - 1 + zc + mod) % mod;
+	cout << ans << "\n";
 }
 
 int32_t main()

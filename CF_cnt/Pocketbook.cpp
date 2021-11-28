@@ -36,18 +36,22 @@ void c_p_c()
 	freopen("input.txt", "r", stdin);
 	freopen("output.txt", "w", stdout);
 #endif
-	w(x) {
-		int u, v;
-		cin >> u >> v;
-		int a = u - 1;
-		int b = v - 1;
-
-		int Lcm = (a * b ) / __gcd(a, b);
-		int ax = 0;
-		ax -= Lcm / b;
-		int ay = Lcm / a;
-		cout << ax << " " << ay << "\n";
+	int n, m;
+	cin >> n >> m;
+	set<int> s[m];
+	rep(i, 0, n) {
+		string a;
+		cin >> a;
+		rep(j, 0, a.size()) {
+			s[j].insert(a[j]);
+		}
 	}
+	int ans = 1;
+	rep(i, 0, m) {
+		ans = ans * (int)s[i].size();
+		ans %= mod;
+	}
+	cout << ans << "\n";
 }
 
 int32_t main()

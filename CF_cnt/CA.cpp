@@ -37,16 +37,20 @@ void c_p_c()
 	freopen("output.txt", "w", stdout);
 #endif
 	w(x) {
-		int u, v;
-		cin >> u >> v;
-		int a = u - 1;
-		int b = v - 1;
+		int X, Y, k;
+		cin >> X >> Y >> k;
 
-		int Lcm = (a * b ) / __gcd(a, b);
-		int ax = 0;
-		ax -= Lcm / b;
-		int ay = Lcm / a;
-		cout << ax << " " << ay << "\n";
+		X = abs(X);
+		Y = abs(Y);
+		/*	deb(X);
+			deb(Y);
+			deb(k);*/
+
+		if (X % k == 0 and Y % k == 0) {
+			cout << "YES" << "\n";
+		} else {
+			cout << "NO" << "\n";
+		}
 	}
 }
 

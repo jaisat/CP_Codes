@@ -29,6 +29,7 @@ mt19937                 rng(chrono::steady_clock::now().time_since_epoch().count
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
 
+
 void c_p_c()
 {
 	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
@@ -36,18 +37,33 @@ void c_p_c()
 	freopen("input.txt", "r", stdin);
 	freopen("output.txt", "w", stdout);
 #endif
-	w(x) {
-		int u, v;
-		cin >> u >> v;
-		int a = u - 1;
-		int b = v - 1;
-
-		int Lcm = (a * b ) / __gcd(a, b);
-		int ax = 0;
-		ax -= Lcm / b;
-		int ay = Lcm / a;
-		cout << ax << " " << ay << "\n";
+	int n, w;
+	cin >> n >> w;
+	vector<pair<int, int> > del;
+	rep(i, 0, n) {
+		int d, av;
+		cin >> d >> av;
+		del.pb({d, av});
 	}
+	sort(del.begin(), del.end());
+	reverse(del.begin(), del.end());
+	int ans = 0;
+	int i = 0;
+	int sz = del.size();
+	while (w > 0 and i < sz) {
+		int  d_curr = del[i].ff;
+		int av_curr = del[i].ss;
+		if (w - av_curr >= 0) {
+			w  -=  av_curr;
+			ans += d_curr * av_curr;
+		} else {
+			ans += w * d_curr;
+			break;
+		}
+		i++;
+	}
+
+	cout << ans << "\n";
 }
 
 int32_t main()

@@ -28,6 +28,25 @@ mt19937                 rng(chrono::steady_clock::now().time_since_epoch().count
 
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
+int n, k;
+int dp[2005][2005];
+int count(int pos, int prev) {
+	if (pos == k) {
+		return 1;
+	}
+
+	int &ans = dp[pos][prev];
+	if (ans != -1) {
+		return ans;
+	}
+
+	ans = 0;
+	for (int i = prev; i <= n; i += prev) {
+		ans += count(pos + 1, i);
+		ans %= mod;
+	}
+	return ans;
+}
 
 void c_p_c()
 {
@@ -36,18 +55,9 @@ void c_p_c()
 	freopen("input.txt", "r", stdin);
 	freopen("output.txt", "w", stdout);
 #endif
-	w(x) {
-		int u, v;
-		cin >> u >> v;
-		int a = u - 1;
-		int b = v - 1;
-
-		int Lcm = (a * b ) / __gcd(a, b);
-		int ax = 0;
-		ax -= Lcm / b;
-		int ay = Lcm / a;
-		cout << ax << " " << ay << "\n";
-	}
+	cin >> n >> k;
+	memset(dp, -1, sizeof dp);
+	cout << count(0, 1) << "\n";
 }
 
 int32_t main()

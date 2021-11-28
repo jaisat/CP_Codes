@@ -28,7 +28,28 @@ mt19937                 rng(chrono::steady_clock::now().time_since_epoch().count
 
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
 
+const int N = 2005;
+int inv[N];
 
+int pw(int a, int b, int m) {
+	if (b == 0) {
+		return 1;
+	}
+	int ans = 1;
+	while (b) {
+		if (b & 1) {
+			ans *= a;
+			ans %= m;
+		}
+		a *= a;
+		a %= m;
+		b = b >> 1;
+	}
+	return ans;
+}
+int inverse(int a, int m) {
+	return pw(a, m - 2, m);
+}
 void c_p_c()
 {
 	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
@@ -36,17 +57,36 @@ void c_p_c()
 	freopen("input.txt", "r", stdin);
 	freopen("output.txt", "w", stdout);
 #endif
-	w(x) {
-		int u, v;
-		cin >> u >> v;
-		int a = u - 1;
-		int b = v - 1;
 
-		int Lcm = (a * b ) / __gcd(a, b);
-		int ax = 0;
-		ax -= Lcm / b;
-		int ay = Lcm / a;
-		cout << ax << " " << ay << "\n";
+	inv[N - 1] = inverse(N - 1, mod);
+
+	int n, k;
+	cin >> n >> k;
+	vi arr(n);
+	vi contri(n);
+	vi ans(n);
+	rep(i, 0, n) {
+		cin >> arr[i];
+	}
+	contri[0] = 1;
+	rep(i, 1, n) {
+		contri[i] = (((k + i - 1) * inverse(i, mod)) % mod * contri[i - 1]) % mod;
+	}
+
+	/*rep(i, 0, n) {
+		cout << contri[i] << " ";
+	}*/
+	rep(i, 0, n) {
+		rep(j, 0, n) {
+			int sub = (j - i >= 0) ? contri[j - i] : 0;
+			ans[j] += (sub * arr[i]) % mod;
+			ans[j] %= mod;
+		}
+	}
+
+
+	rep(i, 0, n) {
+		cout << ans[i] << " ";
 	}
 }
 

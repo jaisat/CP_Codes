@@ -36,18 +36,29 @@ void c_p_c()
 	freopen("input.txt", "r", stdin);
 	freopen("output.txt", "w", stdout);
 #endif
-	w(x) {
-		int u, v;
-		cin >> u >> v;
-		int a = u - 1;
-		int b = v - 1;
-
-		int Lcm = (a * b ) / __gcd(a, b);
-		int ax = 0;
-		ax -= Lcm / b;
-		int ay = Lcm / a;
-		cout << ax << " " << ay << "\n";
+	string a, b;
+	cin >> a >> b;
+	int i = a.size() - 1;
+	int j = b.size() - 1;
+	int f = 1;
+	while (i >= 0 and j >= 0) {
+		int aL = a[i] - '0';
+		int bL = b[j] - '0';
+		if (aL + bL > 9 ) {
+			f = 0;
+			break;
+		}
+		i--;
+		j--;
 	}
+
+	if (f) {
+		cout << "Easy\n";
+	} else {
+		cout << "Hard\n";
+	}
+
+
 }
 
 int32_t main()
