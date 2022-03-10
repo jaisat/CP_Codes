@@ -51,21 +51,10 @@ void c_p_c()
 		return;
 	}
 
-	/*  vi nextdot(n+1);
-	  int prev = n;
-	  for(int i=n-1;i>=0;i--){
-	  	if(s[i] == '.'){
-	  		nextdot[i] = prev;
-	  		prev = i;
-	  	}
-	  }*/
-
 	int i = 0;
 	int j = 0;
-	int mx  = 0;
 	int ans = 0;
 	int cntdot = 0;
-	int prevDot = 0;
 	for (; j < n; j++) {
 		if (s[j] == '.') {
 			cntdot++;

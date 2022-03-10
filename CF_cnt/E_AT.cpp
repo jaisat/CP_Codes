@@ -87,8 +87,6 @@ void c_p_c()
 	rep(i, 0, (int)ans_v.size()) {
 		cout << ans_v[i] << "\n";
 	}
-
-
 }
 
 int32_t main()

@@ -57,8 +57,6 @@ void c_p_c()
 	} else {
 		cout << "Hard\n";
 	}
-
-
 }
 
 int32_t main()

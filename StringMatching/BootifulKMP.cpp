@@ -2,7 +2,7 @@
 #include <ext/pb_ds/assoc_container.hpp>
 using namespace __gnu_pbds;
 using namespace std;
- 
+
 #define ff              first
 #define ss              second
 #define int             long long
@@ -21,23 +21,23 @@ using namespace std;
 #define mk(arr,n,type)  type *arr=new type[n];
 #define w(x)            int x; cin>>x; while(x--)
 mt19937                 rng(chrono::steady_clock::now().time_since_epoch().count());
- 
+
 typedef tree<int, null_type, less<int>, rb_tree_tag, tree_order_statistics_node_update> pbds;
- 
-vector<int> compute_Lps(string s){
+
+vector<int> compute_Lps(string s) {
 	int n = s.size();
 	vector<int> lps(n);
 	lps[0] = 0;
-	int i = 1,j = 0;
-	while( i < n){
-		if(s[i] == s[j]){
+	int i = 1, j = 0;
+	while ( i < n) {
+		if (s[i] == s[j]) {
 			lps[i] = j + 1;
 			i++;
 			j++;
-		}else{
-			if(j == 0){
+		} else {
+			if (j == 0) {
 				lps[i++] = 0;
-			}else{
+			} else {
 				j = lps[j - 1];
 			}
 		}
@@ -46,33 +46,33 @@ vector<int> compute_Lps(string s){
 }
 void c_p_c()
 {
-    ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
+	ios_base::sync_with_stdio(0); cin.tie(0); cout.tie(0);
 #ifndef ONLINE_JUDGE
-    freopen("input.txt", "r", stdin);
-    freopen("output.txt", "w", stdout);
+	freopen("input.txt", "r", stdin);
+	freopen("output.txt", "w", stdout);
 #endif
-    string text,pattern;
-    cin >> text >> pattern;
+	string text, pattern;
+	cin >> text >> pattern;
 
-    string good = pattern + "#" + text;
-    vector<int> occ;
-    vector<int> lps = compute_Lps(good);
-    for(int i = pattern.size() + 1; i < good.size(); i++){
-    	if(lps[i] == pattern.size()){
-    		occ.pb(i - pattern.size() + 1 - (pattern.size() + 1));
-    	}
-    }
-    for(auto x : occ)
-    	cout<<x<<" ";
+	string good = pattern + "#" + text;
+	vector<int> occ;
+	vector<int> lps = compute_Lps(good);
+	for (int i = pattern.size() + 1; i < good.size(); i++) {
+		if (lps[i] == pattern.size()) {
+			occ.pb(i - pattern.size() + 1 - (pattern.size() + 1));
+		}
+	}
+	for (auto x : occ)
+		cout << x << " ";
 }
- 
+
 int32_t main()
 {
-    clock_t begin = clock();
-    c_p_c();
-	#ifndef ONLINE_JUDGE 
-	  clock_t end = clock();
-	  cout<<"\nExecuted In: "<<double(end - begin) / CLOCKS_PER_SEC*1000<<" ms";
-	#endif 
-    return 0;
+	clock_t begin = clock();
+	c_p_c();
+#ifndef ONLINE_JUDGE
+	clock_t end = clock();
+	cout << "\nExecuted In: " << double(end - begin) / CLOCKS_PER_SEC * 1000 << " ms";
+#endif
+	return 0;
 }
